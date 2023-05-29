@@ -70,6 +70,7 @@ ENV DOTFILES_USE_PYTHON_TOOLS=1
 ENV REMOTE_CONTAINERS=1
 
 RUN sh -c "$(wget -qO- https://dotfiles.entelecheia.ai/install)"
+ENV DOTFILES_APPLY_ROOTMOI=0
 
 # Sets the working directory to workspace root
 WORKDIR $WORKSPACE_ROOT
