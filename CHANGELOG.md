@@ -1,5 +1,10 @@
 <!--next-version-placeholder-->
 
+## v0.7.1 (2023-05-29)
+### Fix
+
+* **devenv:** Improve Dockerfile.app script ([`1b392ff`](https://github.com/entelecheia/dockerfiles/commit/1b392ff8b7e69b600130b1e252b77ceab6080c10))
+
 ## v0.7.0 (2023-05-29)
 ### Feature
 
