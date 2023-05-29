@@ -2,6 +2,60 @@
 ARG ARG_BUILD_FROM="entelecheia/devenv:latest-base"
 FROM $ARG_BUILD_FROM
 
+# Setting ARGs and ENVs for user creation and workspace setup
+ARG ARG_USERNAME="app"
+ARG ARG_USER_UID=1000
+ARG ARG_USER_GID=$ARG_USER_UID
+ARG ARG_WORKSPACE_ROOT="/workspace"
+ENV USERNAME $ARG_USERNAME
+ENV USER_UID $ARG_USER_UID
+ENV USER_GID $ARG_USER_GID
+ENV WORKSPACE_ROOT $ARG_WORKSPACE_ROOT
+
+# Creates a non-root user with sudo privileges
+USER root
+RUN groupadd --gid $USER_GID $USERNAME \
+    && adduser --uid $USER_UID --gid $USER_GID --force-badname --disabled-password --gecos "" $USERNAME  \
+    && echo "$USERNAME:$USERNAME" | chpasswd \
+    && adduser $USERNAME sudo \
+    && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+    && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+
+# Switches to the newly created user
+USER $USERNAME
+# Sets up the workspace for the user
+RUN sudo rm -rf $WORKSPACE_ROOT && sudo mkdir -p $WORKSPACE_ROOT/projects
+RUN sudo chown -R $USERNAME:$USERNAME $WORKSPACE_ROOT
+
+# Install dotfiles
+ARG ARG_USER_FULLNAME
+ARG ARG_USER_EMAIL
+ARG ARG_GITHUB_USERNAME
+ARG ARG_SYSTEM_HOSTNAME
+ARG ARG_WORKSPACE_LOCATION="/"
+ARG ARG_DOTFILES_VERSION="0.1.0"
+ENV USER_FULLNAME $ARG_USER_FULLNAME
+ENV USER_EMAIL $ARG_USER_EMAIL
+ENV GITHUB_USERNAME $ARG_GITHUB_USERNAME
+ENV SYSTEM_HOSTNAME $ARG_SYSTEM_HOSTNAME
+ENV WORKSPACE_LOCATION $ARG_WORKSPACE_LOCATION
+ENV DOTFILES_VERSION $ARG_DOTFILES_VERSION
+ENV DOTFILES_APPLY_ROOTMOI=0
+ENV DOTFILES_USE_CODE=1
+ENV DOTFILES_USE_PYTHON_TOOLS=1
+ENV REMOTE_CONTAINERS=1
+
+RUN sh -c "$(wget -qO- https://dotfiles.entelecheia.ai/install)"
+
+RUN echo "Current user: $USERNAME"
+# Sets the working directory to workspace root
+WORKDIR $WORKSPACE_ROOT
+# Copies scripts from host into the image
+COPY ./.docker/scripts/ ./scripts/
+# Installs Python dependencies listed in requirements.txt
+# RUN pip install -r ./scripts/requirements.txt
+
 # Setting ARGs and ENVs for Stable-Diffusion-WebUI GitHub repository
 ARG ARG_APP_GITHUB_USERNAME="entelecheia"
 ARG ARG_APP_GITHUB_REPO="entelecheia"
@@ -11,16 +65,6 @@ ENV APP_GITHUB_USERNAME $ARG_APP_GITHUB_USERNAME
 ENV APP_GITHUB_REPO $ARG_APP_GITHUB_REPO
 ENV APP_INSTALL_ROOT $ARG_APP_INSTALL_ROOT
 ENV APP_CLONE_DIR $ARG_APP_CLONE_DIR
-ENV DOTFILES_APPLY_ROOTMOI=0
-
-USER $USERNAME
-RUN echo "Current user: $USERNAME"
-# Sets the working directory to workspace root
-WORKDIR $WORKSPACE_ROOT
-# Copies scripts from host into the image
-COPY ./.docker/scripts/ ./scripts/
-# Installs Python dependencies listed in requirements.txt
-# RUN pip install -r ./scripts/requirements.txt
 
 # Clones the app repository from GitHub
 # RUN git clone "https://github.com/$APP_GITHUB_USERNAME/$APP_GITHUB_REPO.git" $APP_INSTALL_ROOT/$APP_CLONE_DIR
