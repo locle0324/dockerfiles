@@ -12,6 +12,8 @@ ENV APP_GITHUB_REPO $ARG_APP_GITHUB_REPO
 ENV APP_INSTALL_ROOT $ARG_APP_INSTALL_ROOT
 ENV APP_CLONE_DIR $ARG_APP_CLONE_DIR
 
+USER $USERNAME
+RUN echo "Current user: $USERNAME"
 # Sets the working directory to workspace root
 WORKDIR $WORKSPACE_ROOT
 # Copies scripts from host into the image
@@ -19,8 +21,9 @@ COPY ./.docker/scripts/ ./scripts/
 # Installs Python dependencies listed in requirements.txt
 # RUN pip install -r ./scripts/requirements.txt
 
-# Clones the stable-diffusion-webui repository from GitHub
-RUN git clone "https://github.com/$APP_GITHUB_USERNAME/$APP_GITHUB_REPO.git" $APP_INSTALL_ROOT/$APP_CLONE_DIR
+# Clones the app repository from GitHub
+# RUN git clone "https://github.com/$APP_GITHUB_USERNAME/$APP_GITHUB_REPO.git" $APP_INSTALL_ROOT/$APP_CLONE_DIR
+# RUN sudo chown -R $USERNAME:$USERNAME $APP_INSTALL_ROOT/$APP_CLONE_DIR
 
 # Changes the working directory to the cloned repository
 WORKDIR $APP_INSTALL_ROOT/$APP_CLONE_DIR
