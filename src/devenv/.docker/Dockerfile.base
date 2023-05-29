@@ -7,6 +7,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Updates the image and installs necessary packages
 RUN apt-get update \
     && apt-get install -y curl sudo \
+    curl wget gnupg zsh jq wget unzip gettext autoconf \
     fontconfig fonts-nanum tzdata locales locales-all \
     google-perftools libcairo2-dev imagemagick ffmpeg \
     software-properties-common openssh-server \
@@ -17,6 +18,7 @@ RUN apt-get update \
     # Cleans up unnecessary packages to reduce image size
     && apt-get autoremove -y \
     && apt-get clean -y
+
 
 # Sets up the locale to en_US.UTF-8
 RUN localedef -v -c -i en_US -f UTF-8 en_US.UTF-8 || true
@@ -62,7 +64,7 @@ ENV SYSTEM_HOSTNAME $ARG_SYSTEM_HOSTNAME
 ENV WORKSPACE_LOCATION $ARG_WORKSPACE_LOCATION
 ENV DOTFILES_VERSION $ARG_DOTFILES_VERSION
 
-ENV DOTFILES_APPLY_ROOTMOI=0
+ENV DOTFILES_APPLY_ROOTMOI=1
 ENV DOTFILES_USE_CODE=1
 ENV DOTFILES_USE_PYTHON_TOOLS=1
 ENV REMOTE_CONTAINERS=1
