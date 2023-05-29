@@ -26,9 +26,6 @@ COPY ./.docker/scripts/ ./scripts/
 # RUN git clone "https://github.com/$APP_GITHUB_USERNAME/$APP_GITHUB_REPO.git" $APP_INSTALL_ROOT/$APP_CLONE_DIR
 # RUN sudo chown -R $USERNAME:$USERNAME $APP_INSTALL_ROOT/$APP_CLONE_DIR
 
-# Changes the working directory to the cloned repository
-WORKDIR $APP_INSTALL_ROOT/$APP_CLONE_DIR
-
 # Setting ARGs and ENVs for GitHub branch and server name
 ARG ARG_APP_GITHUB_BRANCH="docker-run"
 ARG ARG_APP_SERVER_NAME
