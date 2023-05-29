@@ -2,6 +2,15 @@
 ARG ARG_BUILD_FROM="entelecheia/devenv:latest-base"
 FROM $ARG_BUILD_FROM
 
+# Setting ARGs and ENVs for user creation and workspace setup
+ARG ARG_USERNAME="app"
+ARG ARG_USER_UID=1000
+ARG ARG_USER_GID=$ARG_USER_UID
+ARG ARG_WORKSPACE_ROOT="/workspace"
+ENV USERNAME $ARG_USERNAME
+ENV USER_UID $ARG_USER_UID
+ENV USER_GID $ARG_USER_GID
+ENV WORKSPACE_ROOT $ARG_WORKSPACE_ROOT
 # Setting ARGs and ENVs for Stable-Diffusion-WebUI GitHub repository
 ARG ARG_APP_GITHUB_USERNAME="entelecheia"
 ARG ARG_APP_GITHUB_REPO="entelecheia"
