@@ -14,13 +14,18 @@ ENV WORKSPACE_ROOT $ARG_WORKSPACE_ROOT
 
 # Creates a non-root user with sudo privileges
 USER root
-RUN groupadd --gid $USER_GID $USERNAME \
-    && adduser --uid $USER_UID --gid $USER_GID --force-badname --disabled-password --gecos "" $USERNAME  \
-    && echo "$USERNAME:$USERNAME" | chpasswd \
-    && adduser $USERNAME sudo \
-    && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
-    && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
-    && chmod 0440 /etc/sudoers.d/$USERNAME
+# check if user exists and if not, create user
+RUN if id -u $USERNAME >/dev/null 2>&1; then \
+        echo "User exists"; \
+    else \
+        groupadd --gid $USER_GID $USERNAME && \
+        adduser --uid $USER_UID --gid $USER_GID --force-badname --disabled-password --gecos "" $USERNAME && \
+        echo "$USERNAME:$USERNAME" | chpasswd && \
+        adduser $USERNAME sudo && \
+        echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+        echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME && \
+        chmod 0440 /etc/sudoers.d/$USERNAME; \
+    fi
 
 # Switches to the newly created user
 USER $USERNAME
@@ -46,7 +51,12 @@ ENV DOTFILES_USE_CODE=1
 ENV DOTFILES_USE_PYTHON_TOOLS=1
 ENV REMOTE_CONTAINERS=1
 
-RUN sh -c "$(wget -qO- https://dotfiles.entelecheia.ai/install)"
+RUN echo "Current user: $USERNAME"
+RUN if [ -d "/home/$USERNAME/.dotfiles" ]; then \
+        echo "Dotfiles already installed"; \
+    else \
+        sh -c "$(wget -qO- https://dotfiles.entelecheia.ai/install)"; \
+    fi
 
 RUN echo "Current user: $USERNAME"
 # Sets the working directory to workspace root
