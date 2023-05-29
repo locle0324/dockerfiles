@@ -13,6 +13,7 @@ ENV USER_GID $ARG_USER_GID
 ENV WORKSPACE_ROOT $ARG_WORKSPACE_ROOT
 
 # Creates a non-root user with sudo privileges
+USER root
 RUN groupadd --gid $USER_GID $USERNAME \
     && adduser --uid $USER_UID --gid $USER_GID --force-badname --disabled-password --gecos "" $USERNAME  \
     && echo "$USERNAME:$USERNAME" | chpasswd \
