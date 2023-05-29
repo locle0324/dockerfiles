@@ -1,5 +1,19 @@
 <!--next-version-placeholder-->
 
+## v0.7.0 (2023-05-29)
+### Feature
+
+* **devenv:** Add dotfiles installation to Dockerfile ([`367ec17`](https://github.com/entelecheia/dockerfiles/commit/367ec17bc70691d749099e93e694e1155aa83eba))
+
+### Fix
+
+* **devenv:** Switch to using non-root user in Dockerfile.app ([`cdeb032`](https://github.com/entelecheia/dockerfiles/commit/cdeb032d08e23d812cf0da40999c7e9465f94b1e))
+* **docker:** Update Dockerfile.app for user creation and workspace setup ([`1eec67f`](https://github.com/entelecheia/dockerfiles/commit/1eec67f62b65243d2fd26bc05ddd31e8c427f0b6))
+
+### Documentation
+
+* Remove unused API and Usage files ([`fbb9375`](https://github.com/entelecheia/dockerfiles/commit/fbb9375fd1cc91673cd9b374647206694c716a56))
+
 ## v0.6.1 (2023-05-16)
 ### Fix
 * Add app variant to devenv-base ([`023e487`](https://github.com/entelecheia/dockerfiles/commit/023e487f9a278edf9b4c5270852a84a803a88557))
