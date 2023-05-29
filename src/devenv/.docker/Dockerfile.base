@@ -7,6 +7,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Updates the image and installs necessary packages
 RUN apt-get update \
     && apt-get install -y curl sudo \
+    curl wget gnupg zsh jq wget unzip gettext autoconf \
     fontconfig fonts-nanum tzdata locales locales-all \
     google-perftools libcairo2-dev imagemagick ffmpeg \
     software-properties-common openssh-server \
@@ -17,6 +18,7 @@ RUN apt-get update \
     # Cleans up unnecessary packages to reduce image size
     && apt-get autoremove -y \
     && apt-get clean -y
+
 
 # Sets up the locale to en_US.UTF-8
 RUN localedef -v -c -i en_US -f UTF-8 en_US.UTF-8 || true
@@ -48,40 +50,34 @@ USER $USERNAME
 RUN sudo rm -rf $WORKSPACE_ROOT && sudo mkdir -p $WORKSPACE_ROOT/projects
 RUN sudo chown -R $USERNAME:$USERNAME $WORKSPACE_ROOT
 
-# Installs Python packages required for the build
-RUN sudo pip install -U pip setuptools
+# Install dotfiles
+ARG ARG_USER_FULLNAME
+ARG ARG_USER_EMAIL
+ARG ARG_GITHUB_USERNAME
+ARG ARG_SYSTEM_HOSTNAME
+ARG ARG_WORKSPACE_LOCATION="/"
+ARG ARG_DOTFILES_VERSION="0.1.0"
+ENV USER_FULLNAME $ARG_USER_FULLNAME
+ENV USER_EMAIL $ARG_USER_EMAIL
+ENV GITHUB_USERNAME $ARG_GITHUB_USERNAME
+ENV SYSTEM_HOSTNAME $ARG_SYSTEM_HOSTNAME
+ENV WORKSPACE_LOCATION $ARG_WORKSPACE_LOCATION
+ENV DOTFILES_VERSION $ARG_DOTFILES_VERSION
 
-# Setting ARGs and ENVs for Stable-Diffusion-WebUI GitHub repository
-ARG ARG_APP_GITHUB_USERNAME="entelecheia"
-ARG ARG_APP_GITHUB_REPO="entelecheia"
-ARG ARG_APP_INSTALL_ROOT="/workspace/projects"
-ARG ARG_APP_CLONE_DIR=$ARG_APP_GITHUB_REPO
-ENV APP_GITHUB_USERNAME $ARG_APP_GITHUB_USERNAME
-ENV APP_GITHUB_REPO $ARG_APP_GITHUB_REPO
-ENV APP_INSTALL_ROOT $ARG_APP_INSTALL_ROOT
-ENV APP_CLONE_DIR $ARG_APP_CLONE_DIR
+ENV DOTFILES_APPLY_ROOTMOI=1
+ENV DOTFILES_USE_CODE=1
+ENV DOTFILES_USE_PYTHON_TOOLS=1
+ENV REMOTE_CONTAINERS=1
+
+RUN sh -c "$(wget -qO- https://dotfiles.entelecheia.ai/install)"
+ENV DOTFILES_APPLY_ROOTMOI=0
 
 # Sets the working directory to workspace root
 WORKDIR $WORKSPACE_ROOT
 # Copies scripts from host into the image
 COPY ./.docker/scripts/ ./scripts/
-# Installs Python dependencies listed in requirements.txt
-RUN pip install -r ./scripts/requirements.txt
-
-# Clones the stable-diffusion-webui repository from GitHub
-RUN git clone "https://github.com/$APP_GITHUB_USERNAME/$APP_GITHUB_REPO.git" $APP_INSTALL_ROOT/$APP_CLONE_DIR
-
-# Changes the working directory to the cloned repository
-WORKDIR $APP_INSTALL_ROOT/$APP_CLONE_DIR
 
 # Sets the time zone within the container
 ENV TZ=Asia/Seoul
 
-# Setting ARGs and ENVs for GitHub branch and server name
-ARG ARG_APP_GITHUB_BRANCH="docker-run"
-ARG ARG_APP_SERVER_NAME
-ENV APP_GITHUB_BRANCH $ARG_APP_GITHUB_BRANCH
-ENV APP_SERVER_NAME $ARG_APP_SERVER_NAME
-
-# Specifies the command that will be executed when the container is run
-CMD ["bash"]
+CMD ["zsh"]
