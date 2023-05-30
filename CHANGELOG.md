@@ -1,5 +1,10 @@
 <!--next-version-placeholder-->
 
+## v0.7.3 (2023-05-30)
+### Fix
+
+* **Dockerfiles:** Update environment variables and remove dotfiles installation from base image ([`131c92d`](https://github.com/entelecheia/dockerfiles/commit/131c92d0a8d8ebba6f496960774a7e6302739d7c))
+
 ## v0.7.2 (2023-05-30)
 ### Fix
 
