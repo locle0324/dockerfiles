@@ -59,7 +59,6 @@ RUN if [ -d "/home/$USERNAME/.dotfiles" ]; then \
         sh -c "$(wget -qO- https://dotfiles.entelecheia.ai/install)"; \
     fi
 
-RUN echo "Current user: $USERNAME"
 # Sets the working directory to workspace root
 WORKDIR $WORKSPACE_ROOT
 # Copies scripts from host into the image
