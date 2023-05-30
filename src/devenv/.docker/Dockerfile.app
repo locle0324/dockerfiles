@@ -48,7 +48,8 @@ ENV WORKSPACE_LOCATION $ARG_WORKSPACE_LOCATION
 ENV DOTFILES_VERSION $ARG_DOTFILES_VERSION
 ENV DOTFILES_APPLY_ROOTMOI=0
 ENV DOTFILES_USE_CODE=1
-ENV DOTFILES_USE_PYTHON_TOOLS=1
+ENV DOTFILES_USE_PYTHON_TOOLS=0
+ENV DOTFILES_MINIMUM=1
 ENV REMOTE_CONTAINERS=1
 
 RUN echo "Current user: $USERNAME"
@@ -58,7 +59,6 @@ RUN if [ -d "/home/$USERNAME/.dotfiles" ]; then \
         sh -c "$(wget -qO- https://dotfiles.entelecheia.ai/install)"; \
     fi
 
-RUN echo "Current user: $USERNAME"
 # Sets the working directory to workspace root
 WORKDIR $WORKSPACE_ROOT
 # Copies scripts from host into the image
