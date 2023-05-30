@@ -1,11 +1,18 @@
 version: "3"
 services:
   onedrive:
-    image: driveone/onedrive:latest
+    build:
+      # Sets the build context to the current directory
+      context: .
+      # Specifies the Dockerfile to use for the build
+      dockerfile: .docker/Dockerfile
+      # Specifies build-time variables (ARGs)
+    # Sets the image name for the built image
+    image: $IMAGE_NAME
     restart: unless-stopped
     environment:
-      - ONEDRIVE_UID=${PUID}
-      - ONEDRIVE_GID=${PGID}
+      - ONEDRIVE_UID=${ONEDRIVE_UID}
+      - ONEDRIVE_GID=${ONEDRIVE_UID}
     volumes:
-      - onedrive_conf:/onedrive/conf
+      - ${ONEDRIVE_CONF_DIR}:/onedrive/conf
       - ${ONEDRIVE_DATA_DIR}:/onedrive/data
