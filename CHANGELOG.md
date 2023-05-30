@@ -1,5 +1,11 @@
 <!--next-version-placeholder-->
 
+## v0.7.2 (2023-05-30)
+### Fix
+
+* **devenv:** Update Dockerfile base and app ([`09901d9`](https://github.com/entelecheia/dockerfiles/commit/09901d90f3e26e2f7c4631729063c6841331cb4b))
+* **devenv:** Disable Python tools in base and app Dockerfile ([`53b2843`](https://github.com/entelecheia/dockerfiles/commit/53b284324f71340e2003c71d33772e2bd2e3c62b))
+
 ## v0.7.1 (2023-05-29)
 ### Fix
 
