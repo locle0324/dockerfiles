@@ -1,21 +1,20 @@
 # Run the OneDrive Client for Linux under Docker
 
-## Basic Setup
+## Run or update with one script
 
-### 3. First run
-
-The 'onedrive' client within the Docker container needs to be authorized with your Microsoft account. This is achieved by initially running docker in interactive mode.
-
-Run the docker image with the commands below and make sure to change `ONEDRIVE_DATA_DIR` to the actual onedrive data directory on your filesystem that you wish to use (e.g. `"/home/abraunegg/OneDrive"`).
+If you are experienced with docker and onedrive, you can use the following script:
 
 ```bash
-export ONEDRIVE_DATA_DIR="${HOME}/OneDrive"
+# Update ONEDRIVE_DATA_DIR with correct OneDrive directory path
+export ONEDRIVE_UID=`id -u`
+export ONEDRIVE_GID=`id -g`
+export ONEDRIVE_DATA_DIR="${HOME}/onedrive/data"
+export ONEDRIVE_CONF_DIR="${HOME}/onedrive/config"
+# Create directory if non-existant
 mkdir -p ${ONEDRIVE_DATA_DIR}
-docker run -it --name onedrive -v onedrive_conf:/onedrive/conf \
-    -v "${ONEDRIVE_DATA_DIR}:/onedrive/data" \
-    -e "ONEDRIVE_UID=${ONEDRIVE_UID}" \
-    -e "ONEDRIVE_GID=${ONEDRIVE_GID}" \
-    driveone/onedrive:latest
+mkdir -p ${ONEDRIVE_CONF_DIR}
+
+dkcr onedrive onedrive
 ```
 
 **Important:** The 'target' folder of `ONEDRIVE_DATA_DIR` must exist before running the Docker container, otherwise, Docker will create the target folder, and the folder will be given 'root' permissions, which then causes the Docker container to fail upon startup with the following error message:
@@ -25,20 +24,6 @@ ROOT level privileges prohibited!
 ```
 
 **NOTE:** It is also highly advisable for you to replace `${ONEDRIVE_UID}` and `${ONEDRIVE_GID}` with your actual UID and GID as specified by your `id` command output to avoid any any potential user or group conflicts.
-
-**Example:**
-
-```bash
-export ONEDRIVE_UID=`id -u`
-export ONEDRIVE_GID=`id -g`
-export ONEDRIVE_DATA_DIR="${HOME}/OneDrive"
-mkdir -p ${ONEDRIVE_DATA_DIR}
-docker run -it --name onedrive -v onedrive_conf:/onedrive/conf \
-    -v "${ONEDRIVE_DATA_DIR}:/onedrive/data" \
-    -e "ONEDRIVE_UID=${ONEDRIVE_UID}" \
-    -e "ONEDRIVE_GID=${ONEDRIVE_GID}" \
-    driveone/onedrive:latest
-```
 
 When the Docker container successfully starts:
 
@@ -51,7 +36,7 @@ Once the 'onedrive' application is authorised, the client will automatically sta
 
 If the client is working as expected, you can detach from the container with Ctrl+p, Ctrl+q.
 
-### 4. Docker Container Status, stop, and restart
+## Docker Container Status, stop, and restart
 
 Check if the monitor service is running
 
@@ -107,7 +92,7 @@ services:
 
 Note that you still have to perform step 3: First Run.
 
-### 6. Edit the config
+## Edit the config
 
 The 'onedrive' client should run in default configuration, however you can change this default configuration by placing a custom config file in the `onedrive_conf` docker volume. First download the default config from [here](https://raw.githubusercontent.com/abraunegg/onedrive/master/config)  
 Then put it into your onedrive_conf volume path, which can be found with:
@@ -120,7 +105,7 @@ Or you can map your own config folder to the config volume. Make sure to copy al
 
 The detailed document for the config can be found here: [Configuration](https://github.com/abraunegg/onedrive/blob/master/docs/USAGE.md#configuration)
 
-### 7. Sync multiple accounts
+## Sync multiple accounts
 
 There are many ways to do this, the easiest is probably to
 
@@ -131,23 +116,6 @@ There are many ways to do this, the easiest is probably to
 export ONEDRIVE_DATA_DIR_WORK="/home/abraunegg/OneDriveWork"
 mkdir -p ${ONEDRIVE_DATA_DIR_WORK}
 docker run -it --restart unless-stopped --name onedrive_Work -v onedrive_conf_Work:/onedrive/conf -v "${ONEDRIVE_DATA_DIR_WORK}:/onedrive/data" driveone/onedrive:latest
-```
-
-## Run or update with one script
-
-If you are experienced with docker and onedrive, you can use the following script:
-
-```bash
-# Update ONEDRIVE_DATA_DIR with correct OneDrive directory path
-ONEDRIVE_DATA_DIR="${HOME}/OneDrive"
-# Create directory if non-existant
-mkdir -p ${ONEDRIVE_DATA_DIR}
-
-firstRun='-d'
-docker pull driveone/onedrive:latest
-docker inspect onedrive_conf > /dev/null 2>&1 || { docker volume create onedrive_conf; firstRun='-it'; }
-docker inspect onedrive > /dev/null 2>&1 && docker rm -f onedrive
-docker run $firstRun --restart unless-stopped --name onedrive -v onedrive_conf:/onedrive/conf -v "${ONEDRIVE_DATA_DIR}:/onedrive/data" driveone/onedrive:latest
 ```
 
 ## Environment Variables
