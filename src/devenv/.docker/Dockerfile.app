@@ -53,6 +53,7 @@ ENV DOTFILES_MINIMUM=1
 ENV REMOTE_CONTAINERS=1
 
 RUN echo "Current user: $USERNAME"
+RUN echo "Dotfiles version: $DOTFILES_VERSION"
 RUN if [ -d "/home/$USERNAME/.dotfiles" ]; then \
         echo "Dotfiles already installed"; \
     else \
