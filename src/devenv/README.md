@@ -8,8 +8,8 @@ If you are experienced with docker and onedrive, you can use the following scrip
 # Update ONEDRIVE_DATA_DIR with correct OneDrive directory path
 export ONEDRIVE_UID=`id -u`
 export ONEDRIVE_GID=`id -g`
-export ONEDRIVE_DATA_DIR="${HOME}/onedrive/data"
-export ONEDRIVE_CONF_DIR="${HOME}/onedrive/config"
+export ONEDRIVE_DATA_DIR="${HOME}/workspace/onedrive"
+export ONEDRIVE_CONF_DIR="${HOME}/.config/onedrive"
 # Create directory if non-existant
 mkdir -p ${ONEDRIVE_DATA_DIR}
 mkdir -p ${ONEDRIVE_CONF_DIR}
