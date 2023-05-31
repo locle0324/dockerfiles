@@ -1,5 +1,22 @@
 <!--next-version-placeholder-->
 
+## v0.8.0 (2023-05-31)
+### Feature
+
+* **onedrive:** Add default configuration file ([`fbe8744`](https://github.com/entelecheia/dockerfiles/commit/fbe87449853c32bc3eea96e74c277cc894d73bbc))
+* **onedrive:** Add environment variables to docker-compose and docker.env ([`b1554cd`](https://github.com/entelecheia/dockerfiles/commit/b1554cde7b9da4bfb7986f1d9fc680569cfd43a5))
+* **onedrive:** Add Korean language support ([`7b8b643`](https://github.com/entelecheia/dockerfiles/commit/7b8b643861e05318683ba0a4c683a488bb3125c3))
+* **onedrive:** Add docker-compose file for easy deployment ([`fb30f5e`](https://github.com/entelecheia/dockerfiles/commit/fb30f5e8b29c7e04bd77038f964aedfbdb70c273))
+
+### Fix
+
+* **onedrive:** Update OneDrive and workspace paths ([`7808d99`](https://github.com/entelecheia/dockerfiles/commit/7808d9936e90d084a7434eb174988fc6c27652fa))
+
+### Documentation
+
+* Update README for onedrive ([`6a3afc6`](https://github.com/entelecheia/dockerfiles/commit/6a3afc618d2a09b0979eac26d298d67da98bbabb))
+* Add README for onedrive ([`2a56495`](https://github.com/entelecheia/dockerfiles/commit/2a56495e761f46ae8b05f897a5e1bdff4789c9ad))
+
 ## v0.7.3 (2023-05-30)
 ### Fix
 
