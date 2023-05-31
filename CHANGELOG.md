@@ -1,5 +1,11 @@
 <!--next-version-placeholder-->
 
+## v0.8.1 (2023-05-31)
+### Fix
+
+* **devenv:** Update Docker environment variables for CUDA device ([`4f8f652`](https://github.com/entelecheia/dockerfiles/commit/4f8f652fee138b74329daf98f50d5d9a12d86357))
+* **devenv:** Enable python tools and install python3-venv ([`78ac842`](https://github.com/entelecheia/dockerfiles/commit/78ac8429e36ebc4b9d46af2a1cc9a33da6bb0ccb))
+
 ## v0.8.0 (2023-05-31)
 ### Feature
 
