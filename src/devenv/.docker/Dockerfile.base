@@ -65,6 +65,20 @@ ENV DOTFILES_USE_PYTHON_TOOLS=0
 ENV DOTFILES_MINIMUM=1
 ENV REMOTE_CONTAINERS=1
 
+# Setup python environment
+# https://docs.python.org/3/using/cmdline.html#envvar-PYTHONFAULTHANDLER
+ENV PYTHONFAULTHANDLER=1
+# https://docs.python.org/3/using/cmdline.html#envvar-PYTHONHASHSEED
+ENV PYTHONHASHSEED=random
+# https://docs.python.org/3/using/cmdline.html#envvar-PYTHONUNBUFFERED
+ENV PYTHONUNBUFFERED=1
+ENV PIP_DEFAULT_TIMEOUT=100
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+ENV PIP_NO_CACHE_DIR=1
+# Install python3-venv
+RUN sudo apt-get install -y python3-venv
+RUN sudo pip install --upgrade pip setuptools wheel
+
 # Sets the working directory to workspace root
 WORKDIR $WORKSPACE_ROOT
 # Copies scripts from host into the image
