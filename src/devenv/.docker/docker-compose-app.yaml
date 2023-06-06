@@ -47,6 +47,7 @@ services:
       JUPYTER_PORT: $JUPYTER_PORT
       JUPYTER_TOKEN: $JUPYTER_TOKEN
       VARIANT: $VARIANT
+      GIT_COMMIT_GPGSIGN: $GIT_COMMIT_GPGSIGN
     ulimits:
       # Sets the stack size and memory lock limits
       stack: 67108864
