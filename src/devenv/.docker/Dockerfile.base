@@ -75,6 +75,7 @@ ENV PYTHONUNBUFFERED=1
 ENV PIP_DEFAULT_TIMEOUT=100
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1
 ENV PIP_NO_CACHE_DIR=1
+ENV POETRY_VIRTUALENVS_CREATE=false
 # Install python3-venv
 RUN sudo apt-get install -y python3-venv
 RUN sudo pip install --upgrade pip setuptools wheel
