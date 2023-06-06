@@ -39,6 +39,7 @@ services:
       SYSTEM_HOSTNAME: $CONTAINER_HOSTNAME
       HOST_JUPYTER_PORT: $HOST_JUPYTER_PORT
       JUPYTER_PORT: $JUPYTER_PORT
+      GIT_COMMIT_GPGSIGN: $GIT_COMMIT_GPGSIGN
     ulimits:
       # Sets the stack size and memory lock limits
       stack: 67108864
