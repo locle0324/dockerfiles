@@ -1,5 +1,16 @@
 <!--next-version-placeholder-->
 
+## v0.8.2 (2023-06-06)
+
+### Fix
+
+* **devenv:** Add GIT_COMMIT_GPGSIGN parameter to docker-compose and docker.app.env files ([`c00de90`](https://github.com/entelecheia/dockerfiles/commit/c00de900291ace904475551603415bb729801368))
+* **devenv:** Set POETRY_VIRTUALENVS_CREATE to false ([`feec6a3`](https://github.com/entelecheia/dockerfiles/commit/feec6a3e7914a12142fdfbf0e5c08aed233d148f))
+
+### Documentation
+
+* Readme for onedrive ([`1b3bbea`](https://github.com/entelecheia/dockerfiles/commit/1b3bbea5105571c46191e0573d449387867b2364))
+
 ## v0.8.1 (2023-05-31)
 ### Fix
 
