@@ -61,11 +61,14 @@ RUN git clone --recursive -b ${TORCHAUDIO_VERSION} https://github.com/pytorch/au
     rm -rf torchaudio
 
 #
-# install git
+# install git from ppa to support the latest functionality
 #
 RUN add-apt-repository ppa:git-core/ppa --yes && \
     apt-get update --yes && \
     apt-get install --yes -qq --no-install-recommends git
+#
+# install apt packages that require other sources than the default
+#
 RUN sh -c "$(wget -qO- https://dotfiles.entelecheia.ai/install-apt-pkgs)"
 
 #
