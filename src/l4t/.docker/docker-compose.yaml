@@ -11,6 +11,7 @@ services:
       # Specifies build-time variables (ARGs)
       args:
         ARG_BUILD_FROM: $BUILD_FROM
+        ARG_TORCHAUDIO_VERSION: v2.0.2
         ARG_USERNAME: $USERNAME
         ARG_USER_UID: $USER_UID
         ARG_USER_GID: $USER_GID
