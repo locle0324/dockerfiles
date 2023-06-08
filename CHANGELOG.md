@@ -1,5 +1,39 @@
 <!--next-version-placeholder-->
 
+## v0.2.0 (2023-06-08)
+
+### Feature
+
+* Add onedrive base dockerfile and entrypoint script ([`bf24cfb`](https://github.com/locle0324/dockerfiles/commit/bf24cfbf63a33f684e6578256dd196b82e9b027f))
+* Add l4t dockerfiles ([`af4f0ac`](https://github.com/locle0324/dockerfiles/commit/af4f0ac5d64c0f877dd5ae2167ffe8d556be5634))
+* Add l4t-pytorch variat to devenv ([`dc3a292`](https://github.com/locle0324/dockerfiles/commit/dc3a292bc5656a1d952b6749d55154483fd9cb3b))
+* **onedrive:** Add default configuration file ([`fbe8744`](https://github.com/locle0324/dockerfiles/commit/fbe87449853c32bc3eea96e74c277cc894d73bbc))
+* **onedrive:** Add environment variables to docker-compose and docker.env ([`b1554cd`](https://github.com/locle0324/dockerfiles/commit/b1554cde7b9da4bfb7986f1d9fc680569cfd43a5))
+* **onedrive:** Add Korean language support ([`7b8b643`](https://github.com/locle0324/dockerfiles/commit/7b8b643861e05318683ba0a4c683a488bb3125c3))
+* **onedrive:** Add docker-compose file for easy deployment ([`fb30f5e`](https://github.com/locle0324/dockerfiles/commit/fb30f5e8b29c7e04bd77038f964aedfbdb70c273))
+* **devenv:** Add dotfiles installation to Dockerfile ([`367ec17`](https://github.com/locle0324/dockerfiles/commit/367ec17bc70691d749099e93e694e1155aa83eba))
+
+### Fix
+
+* **devenv:** Add GIT_COMMIT_GPGSIGN parameter to docker-compose and docker.app.env files ([`c00de90`](https://github.com/locle0324/dockerfiles/commit/c00de900291ace904475551603415bb729801368))
+* **devenv:** Set POETRY_VIRTUALENVS_CREATE to false ([`feec6a3`](https://github.com/locle0324/dockerfiles/commit/feec6a3e7914a12142fdfbf0e5c08aed233d148f))
+* **devenv:** Update Docker environment variables for CUDA device ([`4f8f652`](https://github.com/locle0324/dockerfiles/commit/4f8f652fee138b74329daf98f50d5d9a12d86357))
+* **devenv:** Enable python tools and install python3-venv ([`78ac842`](https://github.com/locle0324/dockerfiles/commit/78ac8429e36ebc4b9d46af2a1cc9a33da6bb0ccb))
+* **onedrive:** Update OneDrive and workspace paths ([`7808d99`](https://github.com/locle0324/dockerfiles/commit/7808d9936e90d084a7434eb174988fc6c27652fa))
+* **Dockerfiles:** Update environment variables and remove dotfiles installation from base image ([`131c92d`](https://github.com/locle0324/dockerfiles/commit/131c92d0a8d8ebba6f496960774a7e6302739d7c))
+* **devenv:** Update Dockerfile base and app ([`09901d9`](https://github.com/locle0324/dockerfiles/commit/09901d90f3e26e2f7c4631729063c6841331cb4b))
+* **devenv:** Disable Python tools in base and app Dockerfile ([`53b2843`](https://github.com/locle0324/dockerfiles/commit/53b284324f71340e2003c71d33772e2bd2e3c62b))
+* **devenv:** Improve Dockerfile.app script ([`1b392ff`](https://github.com/locle0324/dockerfiles/commit/1b392ff8b7e69b600130b1e252b77ceab6080c10))
+* **devenv:** Switch to using non-root user in Dockerfile.app ([`cdeb032`](https://github.com/locle0324/dockerfiles/commit/cdeb032d08e23d812cf0da40999c7e9465f94b1e))
+* **docker:** Update Dockerfile.app for user creation and workspace setup ([`1eec67f`](https://github.com/locle0324/dockerfiles/commit/1eec67f62b65243d2fd26bc05ddd31e8c427f0b6))
+
+### Documentation
+
+* Readme for onedrive ([`1b3bbea`](https://github.com/locle0324/dockerfiles/commit/1b3bbea5105571c46191e0573d449387867b2364))
+* Update README for onedrive ([`6a3afc6`](https://github.com/locle0324/dockerfiles/commit/6a3afc618d2a09b0979eac26d298d67da98bbabb))
+* Add README for onedrive ([`2a56495`](https://github.com/locle0324/dockerfiles/commit/2a56495e761f46ae8b05f897a5e1bdff4789c9ad))
+* Remove unused API and Usage files ([`fbb9375`](https://github.com/locle0324/dockerfiles/commit/fbb9375fd1cc91673cd9b374647206694c716a56))
+
 ## v0.9.0 (2023-06-08)
 
 ### Feature
