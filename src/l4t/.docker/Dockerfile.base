@@ -36,7 +36,8 @@ RUN pip3 install --no-cache-dir --verbose onnx
 #
 # torchaudio
 #
-ARG TORCHAUDIO_VERSION=v2.0.2
+ARG ARG_TORCHAUDIO_VERSION=v2.0.2
+ENV TORCHAUDIO_VERSION $ARG_TORCHAUDIO_VERSION
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -59,11 +60,17 @@ RUN git clone --recursive -b ${TORCHAUDIO_VERSION} https://github.com/pytorch/au
     cd ../ && \
     rm -rf torchaudio
 
+#
+# install git
+#
 RUN add-apt-repository ppa:git-core/ppa --yes && \
     apt-get update --yes && \
     apt-get install --yes -qq --no-install-recommends git
 RUN sh -c "$(wget -qO- https://dotfiles.entelecheia.ai/install-apt-pkgs)"
 
+#
+# user setup
+#
 # Setting ARGs and ENVs for user creation and workspace setup
 ARG ARG_USERNAME="app"
 ARG ARG_USER_UID=1000
@@ -89,7 +96,9 @@ USER $USERNAME
 RUN sudo rm -rf $WORKSPACE_ROOT && sudo mkdir -p $WORKSPACE_ROOT/projects
 RUN sudo chown -R $USERNAME:$USERNAME $WORKSPACE_ROOT
 
+#
 # Install dotfiles
+#
 ARG ARG_USER_FULLNAME
 ARG ARG_USER_EMAIL
 ARG ARG_GITHUB_USERNAME
@@ -109,7 +118,9 @@ ENV DOTFILES_USE_PYTHON_TOOLS=0
 ENV DOTFILES_MINIMUM=1
 ENV REMOTE_CONTAINERS=1
 
+#
 # Setup python environment
+#
 # https://docs.python.org/3/using/cmdline.html#envvar-PYTHONFAULTHANDLER
 ENV PYTHONFAULTHANDLER=1
 # https://docs.python.org/3/using/cmdline.html#envvar-PYTHONHASHSEED
