@@ -1,5 +1,13 @@
 <!--next-version-placeholder-->
 
+## v0.9.0 (2023-06-08)
+
+### Feature
+
+* Add onedrive base dockerfile and entrypoint script ([`bf24cfb`](https://github.com/entelecheia/dockerfiles/commit/bf24cfbf63a33f684e6578256dd196b82e9b027f))
+* Add l4t dockerfiles ([`af4f0ac`](https://github.com/entelecheia/dockerfiles/commit/af4f0ac5d64c0f877dd5ae2167ffe8d556be5634))
+* Add l4t-pytorch variat to devenv ([`dc3a292`](https://github.com/entelecheia/dockerfiles/commit/dc3a292bc5656a1d952b6749d55154483fd9cb3b))
+
 ## v0.8.2 (2023-06-06)
 
 ### Fix
