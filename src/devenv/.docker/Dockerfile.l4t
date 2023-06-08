@@ -1,9 +1,9 @@
 # Sets the base image for subsequent instructions
-ARG ARG_BUILD_FROM="nvcr.io/nvidia/l4t-pytorch:r35.2.1-pth2.0-py3"
+ARG ARG_BUILD_FROM="nvcr.io/nvidia/pytorch:23.02-py3"
 FROM $ARG_BUILD_FROM
 
 # Setting this argument prevents interactive prompts during the build process
-ARG DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 RUN sh -c "$(wget -qO- https://dotfiles.entelecheia.ai/install-apt-prerequisites)"
 RUN sh -c "$(wget -qO- https://dotfiles.entelecheia.ai/install-apt-pkgs)"
 # Updates the image and installs necessary packages
