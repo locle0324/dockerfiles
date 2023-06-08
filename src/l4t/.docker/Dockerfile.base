@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 #
 # install prerequisites
 #
-RUN apt-get install --yes -qq ---no-install-recommends ca-certificates
+RUN apt-get install --yes -qq --no-install-recommends ca-certificates
 RUN apt-get update && \
     apt-get install --yes -qq --no-install-recommends \
         ca-certificates curl wget gnupg \
@@ -29,22 +29,35 @@ RUN echo "Set disable_coredump false" > /etc/sudo.conf
 #
 # install prerequisites for python
 #
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-            python3-pip \
-		  python3-dev \
-		  libopenblas-dev \
-		  libopenmpi-dev \
-            openmpi-bin \
-            openmpi-common \
-		  gfortran \
-		  libomp-dev \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
-
 RUN pip3 install --no-cache-dir setuptools Cython wheel
 RUN pip3 install --no-cache-dir --verbose numpy
 RUN pip3 install --no-cache-dir --verbose onnx
+
+#
+# torchaudio
+#
+ARG TORCHAUDIO_VERSION=v2.0.2
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+		  pkg-config \
+		  libffi-dev \
+		  libsndfile1 \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+RUN pip3 install --no-cache-dir scikit-build && \
+    pip3 install --no-cache-dir ninja && \
+    pip3 install --no-cache-dir --verbose pysoundfile
+
+# note:  see https://github.com/pytorch/audio/issues/2295 for the reason for the sed commands
+RUN git clone --recursive -b ${TORCHAUDIO_VERSION} https://github.com/pytorch/audio torchaudio && \
+    cd torchaudio && \
+    sed -i 's#  URL https://zlib.net/zlib-1.2.11.tar.gz#  URL https://zlib.net/zlib-1.2.12.tar.gz#g' third_party/zlib/CMakeLists.txt || echo "failed to patch torchaudio/third_party/zlib/CMakeLists.txt" && \
+    sed -i 's#  URL_HASH SHA256=c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1#  URL_HASH SHA256=91844808532e5ce316b3c010929493c0244f3d37593afd6de04f71821d5136d9#g' third_party/zlib/CMakeLists.txt || echo "failed to patch torchaudio/third_party/zlib/CMakeLists.txt" && \
+    BUILD_SOX=1 python3 setup.py install && \
+    cd ../ && \
+    rm -rf torchaudio
 
 RUN add-apt-repository ppa:git-core/ppa --yes && \
     apt-get update --yes && \
